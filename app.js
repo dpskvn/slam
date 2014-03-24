@@ -8,6 +8,7 @@ var http = require('http'),
     config = JSON.parse(configFile);
 
 app.use(express.static(__dirname + '/public'));
+app.set('view engine', 'ejs');
 
 io.sockets.on('connection', function (socket) {
     socket.broadcast.emit('mobileconnected');
@@ -16,6 +17,13 @@ io.sockets.on('connection', function (socket) {
     });
 });
 
+app.get('/', function(req, res) {
+  res.render('index', { title: config.name })
+});
+
+app.get('/mobile', function(req, res) {
+  res.render('mobile', { title: config.name })
+});
 
 console.log('✔ ' + config.name + ' is now listening on port ' + config.port + '...');
 server.listen(config.port);
