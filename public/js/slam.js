@@ -1,6 +1,9 @@
 (function() {
-  var $msg = $('.msg');
-      socket = io.connect();
+  var $msg = $('#msg');
+      socket = io.connect(),
+      qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&bgcolor=CCD1D9&data=" + document.location.href + '/mobile',
+      path = document.location.pathname,
+      room = path.slice(1);
       
   var opts = {
     lines: 12, // The number of lines to draw
@@ -22,7 +25,9 @@
   gauge.maxValue = 20; // set max gauge value
   gauge.animationSpeed = 1; // set animation speed (32 is default value)
   gauge.set(10); // set actual value
-  
+  socket.on('connect', function(){
+    socket.emit('subscribe', room);
+  });
   socket.on('mobileconnected', function() {
     $msg.text("Mobile phone connected.");
   });
@@ -37,4 +42,5 @@
     }
     gauge.set(normalized);
   });
+  $('#qr').html('<img src="' + qrURL + '" />');
 }());

@@ -6,6 +6,7 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <% if (!wrongId) { %>
   <div>
     <h2 id="x">X</h2>
     <h2 id="y">Y</h2>
@@ -14,5 +15,8 @@
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script async src="/js/mobile.js"></script>
+  <% } else { %>
+    <h2>Wrong game ID</h2>
+  <% } %>
 </body>
 </html>

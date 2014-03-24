@@ -5,24 +5,42 @@ var http = require('http'),
     server = http.createServer(app),
     io = require('socket.io').listen(server),
     configFile = fs.readFileSync('./config.json', 'utf-8'),
-    config = JSON.parse(configFile);
+    config = JSON.parse(configFile),
+    randomstring = require('randomstring'),
+    removeElement = require('./lib/arrayremove'),
+    availableGames = [];
 
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
 
 io.sockets.on('connection', function (socket) {
-    socket.broadcast.emit('mobileconnected');
-    socket.on('coordinates', function (data) {
-       socket.broadcast.emit('coordinates', data);
-    });
+  socket.broadcast.emit('mobileconnected');
+  socket.on('subscribe', function(room) {
+    socket.join(room);
+    console.log(room);
+  });
+  socket.on('coordinates', function (data) {
+    io.sockets.in(data.room).emit('coordinates', data);
+    //socket.broadcast.emit('coordinates', data);
+  });
 });
 
-app.get('/', function(req, res) {
-  res.render('index', { title: config.name })
+app.get('/:id?', function(req, res) {
+  if (!req.params.id || availableGames.indexOf(req.params.id) === -1) {
+    var idGen = randomstring.generate(20);
+    res.redirect('/' + idGen);
+    availableGames.push(idGen);
+  } else {
+    res.render('index', { title: config.name });
+  }
 });
 
-app.get('/mobile', function(req, res) {
-  res.render('mobile', { title: config.name })
+app.get('/:id/mobile', function(req, res) {
+  if (availableGames.indexOf(req.params.id) === -1) {
+    res.render('mobile', { title: config.name, wrongId: true });
+  } else {
+    res.render('mobile', { title: config.name, wrongId: false });
+  }
 });
 
 console.log('✔ ' + config.name + ' is now listening on port ' + config.port + '...');
