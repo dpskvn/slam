@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Slam!</title>
+    <link href="/css/style.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+  <div>
+    <div class="names">
+      <h2 contenteditable="true" class="name left">Player 1</h2>
+      <h2 contenteditable="true" class="name right">Player 2</h2>
+    </div>
+    <canvas width=600 height=300 id="graph"></canvas>
+    <h2 id="msg"></h2>
+  </div>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+  <script async src="/js/vendor/gauge.js"></script>
+  <script async src="/js/slam.js"></script>
+</body>
+</html>
