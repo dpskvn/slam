@@ -44,4 +44,4 @@ app.get('/:id/mobile', function(req, res) {
 });
 
 console.log('✔ ' + config.name + ' is now listening on port ' + config.port + '...');
-server.listen(config.port);
+server.listen(process.env.PORT || config.port);
