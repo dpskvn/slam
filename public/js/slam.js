@@ -1,6 +1,6 @@
 (function() {
   var $msg = $('#msg');
-      socket = io.connect(),
+      socket = io.connect('/'),
       qrURL = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&bgcolor=CCD1D9&data=" + document.location.href + '/mobile',
       path = document.location.pathname,
       room = path.slice(1);

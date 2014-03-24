@@ -2,7 +2,7 @@
   var xD = document.getElementById('x'),
       yD = document.getElementById('y'),
       zD = document.getElementById('z'),
-      socket = io.connect(),
+      socket = io.connect('/'),
       path = document.location.pathname,
       room = path.slice(1, -7);
   
