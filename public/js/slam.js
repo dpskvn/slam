@@ -20,7 +20,7 @@
         generateGradient: true
       },
       target = document.getElementById('graph'),
-      gauge = new Gauge(target).setOptions(opts);
+      gauge = new Gauge(target).setOptions(gaugeOptions);
       
   gauge.maxValue = 20; // set max gauge value
   gauge.animationSpeed = 1; // set animation speed (32 is default value)
