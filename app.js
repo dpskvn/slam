@@ -6,7 +6,7 @@ var http = require('http'),
     io = require('socket.io').listen(server),
     configFile = fs.readFileSync('./config.json', 'utf-8'),
     config = JSON.parse(configFile),
-    randomstring = require('randomstring'),
+    shortid = require('shortid'),
     removeElement = require('./lib/arrayremove'),
     availableGames = [];
 
@@ -27,7 +27,7 @@ io.sockets.on('connection', function (socket) {
 
 app.get('/:id?', function(req, res) {
   if (!req.params.id || availableGames.indexOf(req.params.id) === -1) {
-    var idGen = randomstring.generate(20);
+    var idGen = shortid.generate();
     res.redirect('/' + idGen);
     availableGames.push(idGen);
   } else {
