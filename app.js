@@ -8,10 +8,27 @@ var http = require('http'),
     config = JSON.parse(configFile),
     shortid = require('shortid'),
     removeElement = require('./lib/arrayremove'),
-    availableGames = [];
+    availableGames = []; // array containing currently running games
 
+
+// Server static content and use EJS for templates
 app.use(express.static(__dirname + '/public'));
 app.set('view engine', 'ejs');
+
+// Configure Socket.io
+io.configure('production', function(){
+  io.enable('browser client etag');
+  io.enable('browser client minification');
+  io.enable('browser client gzip');
+  io.set('log level', 1);
+
+  io.set('transports', ['websocket']); // Use only websockets in production
+});
+
+io.configure('development', function(){
+  io.set('transports', ['websocket']);
+});
+
 
 io.sockets.on('connection', function (socket) {
   socket.broadcast.emit('mobileconnected');
@@ -26,7 +43,9 @@ io.sockets.on('connection', function (socket) {
 });
 
 app.get('/:id?', function(req, res) {
+  // Check if the ID exists and if it's valid
   if (!req.params.id || availableGames.indexOf(req.params.id) === -1) {
+    // Generate a new ID
     var idGen = shortid.generate();
     res.redirect('/' + idGen);
     availableGames.push(idGen);
@@ -36,6 +55,7 @@ app.get('/:id?', function(req, res) {
 });
 
 app.get('/:id/mobile', function(req, res) {
+  // Check if the ID is valid
   if (availableGames.indexOf(req.params.id) === -1) {
     res.render('mobile', { title: config.name, wrongId: true });
   } else {
