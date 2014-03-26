@@ -11,15 +11,15 @@
         pointer: {
           length: 0.9, // The radius of the inner circle
           strokeWidth: 0.035, // The rotation offset
-          color: '#000000' // Fill color
+          color: '#2A2935' // Fill color
         },
         limitMax: true,   // If true, the pointer will not go past the end of the gauge
         colorStart: '#6FADCF',   // Colors
-        colorStop: '#DA4453',    // just experiment with them
-        strokeColor: '#4A89DC',   // to see which ones work best for you
+        colorStop: '#BA4245',    // just experiment with them
+        strokeColor: '#5D8F99',   // to see which ones work best for you
         generateGradient: true
       },
-      target = document.getElementById('graph'),
+      target = document.getElementById('gauge'),
       gauge = new Gauge(target).setOptions(gaugeOptions);
       
   gauge.maxValue = 20; // set max gauge value

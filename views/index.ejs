@@ -6,15 +6,19 @@
     <link href="/css/style.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  <div>
+  <div class="content">
+    <header>Sla<span>m!</span></header>
     <div class="names">
-      <h2 contenteditable="true" class="name left">Player 1</h2>
-      <h2 contenteditable="true" class="name right">Player 2</h2>
+      <div contenteditable="true" class="name left">Player 1</div>
+      <div class="vs">v<span>s</span></div>
+      <div contenteditable="true" class="name right">Player 2</div>
     </div>
-    <canvas width=600 height=300 id="graph"></canvas>
+    <div class="g">
+      <canvas width=1200 height=600 id="gauge"></canvas>
+    </div>
     <h2 id="msg"></h2>
-    <div id="qr"></div>
   </div>
+  <footer></footer>
   <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.0/jquery.min.js"></script>
   <script src="/socket.io/socket.io.js"></script>
   <script async src="/js/vendor/gauge.js"></script>
